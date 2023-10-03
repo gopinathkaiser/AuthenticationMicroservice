@@ -1,0 +1,29 @@
+server:
+  port: 8090
+
+eureka:
+  instance:
+    ip-address: localhost
+
+spring:
+  application:
+    name: QUIZ-SERVICE
+
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/QuizService
+    username: postgres
+    password: divum123
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+
+    client:
+      service-url:
+        defaultZone: http://localhost:8761/
+
+
+
+
