@@ -1,3 +1,13 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: one
+          uri: http://localhost:8090
+          predicates:
+            - Path=/QUIZ/**
+          filters:
+            - AuthenticationFilter
+            - RewritePath=/QUIZ/(?<remaining>.*), /${remaining}
 
-
-
+#  lb://QUIZ-SERVICE

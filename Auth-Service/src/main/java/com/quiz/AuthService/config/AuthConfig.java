@@ -25,7 +25,7 @@ public class AuthConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
         return httpSecurity.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/add","/auth/generateToken","/auth/validate")
+                .requestMatchers("/auth/add","/auth/**","/auth/validate")
                 .permitAll()
                 .and()
                 .build();

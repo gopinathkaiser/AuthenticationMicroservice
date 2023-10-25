@@ -42,6 +42,7 @@ public class QuestionController {
 
     @PostMapping("getQuestions")
     public ResponseEntity<List<QuestionWrapper>> getQuestionsFromId(@RequestBody List<Integer> questionIds){
+        System.out.println("afterr ms");
         return questionService.getQuestionsFromId(questionIds);
     }
 

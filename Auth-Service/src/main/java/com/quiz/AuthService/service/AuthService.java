@@ -22,6 +22,7 @@ public class AuthService {
 
     public String saveUser(UserCredentials userCredentials){
         userCredentials.setPassword(passwordEncoder.encode(userCredentials.getPassword()));
+        System.out.println(userCredentials);
          userCredentialsRepo.save(userCredentials);
          return "saved successfully";
     }
