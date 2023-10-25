@@ -14,15 +14,17 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
     @Autowired
     private JwtUtil jwtUtil;
 
+    @Autowired
+    private RouteValidate validator;
+
     public AuthenticationFilter() {
         super(Config.class);
     }
 
-    @Override
+        @Override
     public GatewayFilter apply(AuthenticationFilter.Config config) {
         return ((exchange, chain) -> {
-//            if (validator.isSecured.test(exchange.getRequest())) {
-                //header contains token or not
+            if (validator.isSecured.test(exchange.getRequest())) {
                 if (!exchange.getRequest().getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
                     throw new RuntimeException("missing authorization header");
                 }
@@ -36,10 +38,9 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                     jwtUtil.validateToken(authHeader);
 
                 } catch (Exception e) {
-                    System.out.println("invalid access...!");
                     throw new InvalidAccessException("un authorized access to application");
                 }
-//            }
+            }
             return chain.filter(exchange);
         });
     }

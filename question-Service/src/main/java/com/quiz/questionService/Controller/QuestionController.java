@@ -18,7 +18,6 @@ public class QuestionController {
     @Autowired
     QuestionService questionService;
 
-
     @GetMapping("allQuestions")
     public ResponseEntity<List<Question>> getAllQuestions(){
         return questionService.getAllQuestions();
@@ -34,14 +33,15 @@ public class QuestionController {
         return  questionService.addQuestion(question);
     }
 
-    @GetMapping("generate")
+    @GetMapping("generate/{categoryName}/{numQuestions}")
     public ResponseEntity<List<Integer>> getQuestionsForQuiz
-            (@RequestParam String categoryName, @RequestParam Integer numQuestions ){
+            (@PathVariable String categoryName, @PathVariable Integer numQuestions ){
+        System.out.println("create quiz from question");
         return questionService.getQuestionsForQuiz(categoryName, numQuestions);
     }
 
     @PostMapping("getQuestions")
-    public ResponseEntity<List<QuestionWrapper>> getQuestionsFromId(@RequestBody List<Integer> questionIds){
+    public List<QuestionWrapper> getQuestionsFromId(@RequestBody List<Integer> questionIds){
         System.out.println("afterr ms");
         return questionService.getQuestionsFromId(questionIds);
     }

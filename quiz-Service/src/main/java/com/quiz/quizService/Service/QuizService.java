@@ -25,21 +25,29 @@ public class QuizService {
     @Autowired
     QuizInterface quizInterface;
 
+    @Autowired
+    RestTemplate restTemplate;
+
     public ResponseEntity<String> createQuiz(String category, int numQ, String title) {
 
-        List<Integer> questions = quizInterface.getQuestionsForQuiz(category, numQ).getBody();
+        String questionUrl = "http://localhost:8080/question/generate/" + category + "/" + numQ;
+
+//        List<Integer> questions = quizInterface.getQuestionsForQuiz(category, numQ).getBody();
+        List<Integer> questions = restTemplate.getForObject(questionUrl, List.class);
         Quiz quiz = new Quiz();
         quiz.setTitle(title);
         quiz.setQuestions(questions);
         quizDao.save(quiz);
-
+        System.out.println("quiz service");
         return new ResponseEntity<>("Success", HttpStatus.CREATED);
     }
 
-    public ResponseEntity<List<QuestionWrapper>> getQuizQuestions(Integer id) {
+    public List<QuestionWrapper> getQuizQuestions(Integer id) {
         Quiz quiz = quizDao.findById(id).get();
         List<Integer> questionIds = quiz.getQuestions();
-        ResponseEntity<List<QuestionWrapper>> questions = quizInterface.getQuestionsFromId(questionIds);
+//        ResponseEntity<List<QuestionWrapper>> questions = quizInterface.getQuestionsFromId(questionIds);
+        String questionUrl = "http://localhost:8080/question/getQuestions";
+        List<QuestionWrapper> questions = restTemplate.postForObject(questionUrl, questionIds, List.class);
         return questions;
     }
 

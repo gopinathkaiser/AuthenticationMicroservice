@@ -47,7 +47,7 @@ public class QuestionService {
         return new ResponseEntity<>(questions, HttpStatus.OK);
     }
 
-    public ResponseEntity<List<QuestionWrapper>> getQuestionsFromId(List<Integer> questionIds) {
+    public List<QuestionWrapper> getQuestionsFromId(List<Integer> questionIds) {
         List<QuestionWrapper> wrappers = new ArrayList<>();
         List<Question> questions = new ArrayList<>();
         System.out.println(questionIds);
@@ -66,7 +66,7 @@ public class QuestionService {
             wrappers.add(wrapper);
         }
 
-        return new ResponseEntity<>(wrappers, HttpStatus.OK);
+        return wrappers;
     }
 
     public ResponseEntity<Integer> getScore(List<Response> responses) {

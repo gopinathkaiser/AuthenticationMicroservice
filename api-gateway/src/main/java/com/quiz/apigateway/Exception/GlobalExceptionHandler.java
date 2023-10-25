@@ -4,12 +4,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @ControllerAdvice
-public class GlobalExceptionHandler {
+public class GlobalExceptionHandler{
 
-    @ExceptionHandler
-    public ResponseEntity<String> handleInvalidAccessException(InvalidAccessException ia){
-        return new ResponseEntity<>(ia.getMessage(), HttpStatus.UNAUTHORIZED);
+    @ExceptionHandler(value = InvalidAccessException.class)
+    public ResponseEntity<?> handleInvalidAccessException(){
+        return new ResponseEntity<>("Invalid access", HttpStatus.UNAUTHORIZED);
     }
 }

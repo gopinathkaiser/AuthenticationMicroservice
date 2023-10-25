@@ -10,4 +10,12 @@ spring:
             - AuthenticationFilter
             - RewritePath=/QUIZ/(?<remaining>.*), /${remaining}
 
+        - id : two
+          uri : http://localhost:8091
+          predicates:
+            - Path=/auth/**
+          filters:
+            - AuthenticationFilter
+            - RewritePath=/QUIZ/(?<remaining>.*), /${remaining}
+
 #  lb://QUIZ-SERVICE
